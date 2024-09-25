@@ -9,3 +9,10 @@ export async function GET() {
   console.log(data);
   return NextResponse.json({ result: true });
 }
+export async function POST(request) {
+  let payload = await request.json();
+  await mongoose.connect(connectionStr, { useNewUrlParser: true });
+  const restaurant = await restaurantSchema(payload);
+  const result = restaurant.save();
+  return NextResponse.json({ result, success: true });
+}
